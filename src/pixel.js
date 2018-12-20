@@ -1,7 +1,7 @@
 class Pixel {
     constructor(brain = NaN) {
         if (brain != NaN) {
-            this.brain = new NeuralNetwork(8, 10, 3);
+            this.brain = new NeuralNetwork(4, 4, 3);
         }
         else this.brain = brain;
         this.score = 0;
@@ -47,11 +47,11 @@ class Pixel {
 
         fill(50 * this.score, 10 * this.score, 5 * this.score);
 
-        if (frameCount % 5 == 0) {
+        if (frameCount % 1 == 0) {
             this.x += this.xDir;
             this.y += this.yDir;
 
-            let inputs = [this.x, this.y, this.xDir, this.yDir, foodX, foodY, (foodX - this.x), (foodY - this.y)]
+            let inputs = [this.xDir, this.yDir, (foodX - this.x), (foodY - this.y)]
             let outputs = this.brain.feedforward(inputs)
             if (outputs[0] > 0.5) this.Turn(1)
             if (outputs[1] > 0.5) this.Turn(0)
