@@ -1,10 +1,10 @@
 class Pixel {
     constructor(brain = NaN) {
-        if (brain != NaN) {
-            this.brain = new NeuralNetwork(25, 50, 4);
+        if (brain instanceof NeuralNetwork) {
+             this.brain = brain;
+        } else {
+            this.brain = new NeuralNetwork(25,50,4);
         }
-        else this.brain = brain;
-
 
         this.xSquares = width / SCALE;
         this.ySquares = height / SCALE;
@@ -32,7 +32,7 @@ class Pixel {
     }
 
     Draw(score) {
-        fill(50 * score, 10 * score, 5 * score, 50);
+        fill(50 * score, 10 * score, 5 * score);
         rect(SCALE * this.x, SCALE * this.y, SCALE, SCALE)
     }
 
@@ -42,7 +42,7 @@ class Pixel {
 
     Mutate(mr) {
         let nn = this.brain;
-        this.brain = nn.mutate(mr);
+        return new Pixel(nn.mutate(mr));
     }
 
     randomise() {

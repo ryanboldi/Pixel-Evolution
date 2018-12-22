@@ -3,7 +3,9 @@ const mutationRate = 0.1;
 const PopLength = 20; //seconds
 const survivability = 100
 const gameAmount = 10;
-const speed = 10;
+const trainSpeed = 100;
+
+var bestGame;
 
 var games = [];
 
@@ -15,6 +17,12 @@ function setup() {
     genBut = createButton('Do one generation');
     genBut.position(width + 50, 50);
     genBut.mousePressed(doOneGen);
+
+    trainBut = createButton('train');
+    trainBut.position(width + 50, 100);
+    trainBut.mousePressed(train);
+
+    bestGame = new Game();
 }
 
 function draw() {
@@ -26,8 +34,14 @@ function draw() {
     for (let i = 1; i < xlines; i++)    line(i * SCALE, 0, i * SCALE, height);
     for (let j = 1; j < ylines; j++)    line(0, j * SCALE, width, j * SCALE);
 
-    games[0].Draw();
+    if (frameCount % 10*60*PopLength == 0 ) bestGame = new Game (bestGame.p);
 
+    if (frameCount % 10 == 0) {
+        bestGame.Move();
+        bestGame.Update();
+        
+    }
+    bestGame.Draw();
 }
 
 function doOneGen() {
@@ -35,15 +49,36 @@ function doOneGen() {
         for (let j = 0; j < games.length; j++)  games[j].timeStep();
     }
 
+    //normalise all the scores
     let maxScore = 0;
 
     for (let i = 0; i < games.length; i++) {
         if (games[i].score > maxScore) maxScore = games[i].score;
+        if (games[i].score > bestGame.score) bestGame = games[i];
     }
+    console.log(maxScore);
+    let matingPool = [];
+    for (let i = 0; i < games.length; i++) {
+        if (random(1) < (games[i].score / maxScore)) {
+            matingPool.push(games[i]);
+        }
+    }
+    for (let i = 0; i < matingPool.length; i++) {
+        matingPool[i] = matingPool[i].Mutate(mutationRate);
+    }
+
+    for (let i = 0; i < (gameAmount - matingPool.length); i++) {
+        matingPool.push(new Game());
+    }
+
+    games = matingPool;
 }
 
-
-
+function train() {
+    for (let i = 0; i < trainSpeed; i++) {
+        doOneGen();
+    }
+}
 
 // function keyPressed(){
 //     if (keyCode == UP_ARROW) g.Move(1,0,0,0);

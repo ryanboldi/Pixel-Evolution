@@ -12,6 +12,7 @@ class Game {
         this.h = height / SCALE;
 
         this.score = 0;
+        this.foods = 0;
 
 
         this.f = new Food();
@@ -19,13 +20,15 @@ class Game {
 
     Update() {
         this.p.Update();
-        this.p.Draw();
-        this.f.Draw();
 
-        if (this.p.x == this.f.x & this.p.y == this.f.y) {
-            this.score++;
+        let dist = (this.p.x - this.f.x) ** 2 + (this.p.y - this.f.y) ** 2;
+
+        if (this.f.x == this.p.x & this.f.y == this.p.y) {
+        this.foods++;
             this.f = new Food();
         }
+
+        this.score = map(dist, 0, 50, 10, 0) + ((this.foods) * 10);
     }
 
     Draw() {
@@ -37,7 +40,7 @@ class Game {
     timeStep() {
         this.Update();
         this.Move();
-        this.Draw();
+        //this.Draw();
     }
 
     // Move(u, d, r, l) {
@@ -69,5 +72,10 @@ class Game {
             }
         }
         return arr;
+    }
+
+    Mutate(mr) {
+        let g = new Game(this.p.Mutate(mr));
+        return g;
     }
 }
