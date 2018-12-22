@@ -1,11 +1,19 @@
 class Game {
-    constructor(w, h) {
-        this.w = w;
-        this.h = h;
+    constructor(pixel = NaN) {
+        if (pixel instanceof Pixel) {
+            this.p = pixel;
+        }
+        else {
+            this.p = new Pixel();
+            this.p.randomise();
+        }
+
+        this.w = width / SCALE;
+        this.h = height / SCALE;
 
         this.score = 0;
 
-        this.p = new Pixel();
+
         this.f = new Food();
     }
 
@@ -21,22 +29,21 @@ class Game {
     }
 
     Draw() {
+        this.p.Draw(this.score);
         this.f.Draw();
-        this.p.Draw();
     }
 
 
-    timeStep(){
+    timeStep() {
         this.Update();
-        this.Draw();
         this.Move();
-
+        this.Draw();
     }
 
     // Move(u, d, r, l) {
     //     this.p.Move(u, d, r, l);
     // }
-    Move(){
+    Move() {
         this.p.decide(this.toArray());
     }
 

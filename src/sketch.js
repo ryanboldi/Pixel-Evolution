@@ -12,10 +12,9 @@ function setup() {
 
     for (let i = 0; i < gameAmount; i++) games.push(new Game(width / SCALE, height / SCALE));
 
-    g = new Game(width / SCALE, height / SCALE);
-
-    p = new Pixel();
-    f = new Food();
+    genBut = createButton('Do one generation');
+    genBut.position(width + 50, 50);
+    genBut.mousePressed(doOneGen);
 }
 
 function draw() {
@@ -27,11 +26,22 @@ function draw() {
     for (let i = 1; i < xlines; i++)    line(i * SCALE, 0, i * SCALE, height);
     for (let j = 1; j < ylines; j++)    line(0, j * SCALE, width, j * SCALE);
 
-    for (let i = 0; i < speed; i++) {
+    games[0].Draw();
+
+}
+
+function doOneGen() {
+    for (let i = 0; i < (PopLength * 60); i++) {
         for (let j = 0; j < games.length; j++)  games[j].timeStep();
     }
 
+    let maxScore = 0;
+
+    for (let i = 0; i < games.length; i++) {
+        if (games[i].score > maxScore) maxScore = games[i].score;
+    }
 }
+
 
 
 
