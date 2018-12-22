@@ -1,5 +1,5 @@
-const SCALE = 100; //height and width need to be divisible by this
-const mutationRate = 0.1;
+const SCALE = 50; //height and width need to be divisible by this
+const mutationRate = 0.05;
 const PopLength = 20; //seconds
 const survivability = 100
 const gameAmount = 10;
@@ -34,12 +34,11 @@ function draw() {
     for (let i = 1; i < xlines; i++)    line(i * SCALE, 0, i * SCALE, height);
     for (let j = 1; j < ylines; j++)    line(0, j * SCALE, width, j * SCALE);
 
-    if (frameCount % 10*60*PopLength == 0 ) bestGame = new Game (bestGame.p);
+    if (frameCount % (10*60*PopLength) == 0 ) bestGame = new Game (bestGame.p);
 
     if (frameCount % 10 == 0) {
         bestGame.Move();
         bestGame.Update();
-        
     }
     bestGame.Draw();
 }
@@ -56,7 +55,7 @@ function doOneGen() {
         if (games[i].score > maxScore) maxScore = games[i].score;
         if (games[i].score > bestGame.score) bestGame = games[i];
     }
-    console.log(maxScore);
+    console.log(bestGame.score);
     let matingPool = [];
     for (let i = 0; i < games.length; i++) {
         if (random(1) < (games[i].score / maxScore)) {

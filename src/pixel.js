@@ -3,7 +3,7 @@ class Pixel {
         if (brain instanceof NeuralNetwork) {
              this.brain = brain;
         } else {
-            this.brain = new NeuralNetwork(25,50,4);
+            this.brain = new NeuralNetwork((width/SCALE) * (height/SCALE),50,4);
         }
 
         this.xSquares = width / SCALE;
