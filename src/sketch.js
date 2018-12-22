@@ -1,6 +1,6 @@
-const SCALE = 30; //height and width need to be divisible by this
-const foodAmount = 50;
-const pixelAmount = 50;
+const SCALE = 60; //height and width need to be divisible by this
+const foodAmount = 5;
+const pixelAmount = 5;
 const mutationRate = 0.01;
 const PopLength = 5; //seconds
 const survivability = 100
@@ -9,7 +9,7 @@ var Pixels = [];
 var Foods = [];
 
 function setup() {
-    createCanvas(900, 900);
+    createCanvas(600, 600);
     for (let i = 0; i < pixelAmount; i++)    Pixels.push(new Pixel);
     for (let i = 0; i < foodAmount; i++)    Foods.push(new Food);
 }
@@ -35,17 +35,22 @@ function draw() {
 }
 
 function MakeNewPop(Pixels) {
-    console.log("Making new pop")
-    let surviviors = []
+    console.log("Making new pop");
+    let survivors = [];
+    let maxFit = 0;
+
     for (let i = 0; i < Pixels.length; i++) {
-        if (random(0, 1) < (Pixels[i].score) / (ceil(foodAmount / survivability))) surviviors.push(Pixels[i])
+        if (Pixels[i].score > maxFit) maxFit = Pixels[i].score;
+    }
+    for (let i = 0; i < Pixels.length; i++) {
+        if (random(0,1) < (Pixels[i].score/maxFit)) survivors.push(Pixels[i]);
     }
     
-    console.log(pixelAmount- surviviors.length);
-    for (let i = 0; i < (pixelAmount - surviviors); i++)  surviviors.push(new Pixel);
-    for (let i = 0; i < surviviors; i++)    surviviors[i] = surviviors[i].Mutate();
+    console.log(pixelAmount- survivors.length);
+    for (let i = 0; i < (pixelAmount - survivors); i++)  survivors.push(new Pixel);
+    for (let i = 0; i < survivors; i++)    survivors[i] = survivors[i].Mutate();
 
-    Pixels = surviviors;
+    Pixels = survivors;
 }
 
 function resetFood (){

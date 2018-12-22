@@ -13,8 +13,8 @@ class Pixel {
 
         this.xSquares = width / SCALE;
         this.ySquares = height / SCALE;
-        this.x = floor(random(this.xSquares));
-        this.y = floor(random(this.ySquares));
+        this.x = floor(this.xSquares/2);
+        this.y = this.ySquares-1;
     }
 
     Turn(input) { //1 for right, 0 for left, -1 for backwards
@@ -47,7 +47,7 @@ class Pixel {
 
         fill(50 * this.score, 10 * this.score, 5 * this.score);
 
-        if (frameCount % 1 == 0) {
+        if (frameCount % 5 == 0) {
             this.x += this.xDir;
             this.y += this.yDir;
 
@@ -94,8 +94,8 @@ class Pixel {
 
         this.xSquares = width / SCALE;
         this.ySquares = height / SCALE;
-        this.x = floor(random(this.xSquares));
-        this.y = floor(random(this.ySquares));
+        this.x = floor(this.xSquares/2);
+        this.y = this.ySquares-1;
     }
 
 }
