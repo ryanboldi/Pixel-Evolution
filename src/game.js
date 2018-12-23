@@ -24,11 +24,11 @@ class Game {
         let dist = (this.p.x - this.f.x) ** 2 + (this.p.y - this.f.y) ** 2;
 
         if (this.f.x == this.p.x & this.f.y == this.p.y) {
-        this.foods++;
+            this.foods++;
             this.f = new Food();
         }
 
-        this.score = map(dist, 0, 50, 10, 0) + ((this.foods) * 10);
+        this.score = map(dist, 0, this.w * this.h, 100, 0) + ((this.foods) * 1000);
     }
 
     Draw() {
@@ -77,5 +77,10 @@ class Game {
     Mutate(mr) {
         let g = new Game(this.p.Mutate(mr));
         return g;
+    }
+
+    Reset() {
+        this.p = new Pixel(this.p);
+        this.f = new Food();
     }
 }
