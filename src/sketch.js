@@ -1,6 +1,6 @@
 const SCALE = 100; //height and width need to be divisible by this
 const mutationRate = 0.05;
-const PopLength = 20; //seconds
+const PopLength = 60; //seconds
 const survivability = 100
 const gameAmount = 10;
 const trainSpeed = 100;
@@ -35,21 +35,16 @@ function draw() {
     
     stroke(0, 0, 0, 15);
 
+    background(100);
     var xlines = (width / SCALE);
     var ylines = (height / SCALE);
     for (let i = 1; i < xlines; i++)    line(i * SCALE, 0, i * SCALE, height);
     for (let j = 1; j < ylines; j++)    line(0, j * SCALE, width, j * SCALE);
 
-    if (frameCount % 600 == 0) {
-        bestGame.Reset();
-        console.log("Resetting")
-    }
-
-    if (frameCount % 60 == 0) {
-        background(100);
-        bestGame.Move();
-        bestGame.Update();
-        bestGame.Draw();
+    for (let i = 0; i < games.length; i++){
+        games[i].Update();
+        games[i].Move();
+        games[i].Draw();
     }
 }
 
@@ -60,6 +55,7 @@ function doOneGen() {
 
     //normalise all the scores
     let maxScore = 0;
+    var newGen  = [];
 
     for (let i = 0; i < games.length; i++) {
         if (games[i].score > maxScore) maxScore = games[i].score;
@@ -72,17 +68,17 @@ function doOneGen() {
             matingPool.push(games[i]);
         }
     }
-    for (let i = 0; i < matingPool.length; i++) {
-        matingPool[i] = matingPool[i].Mutate(mutationRate);
-    }
 
     console.log(matingPool.length);
 
-    for (let i = 0; i < (gameAmount - matingPool.length); i++) {
-        matingPool.push(new Game());
+    for (let i = 0; i < gameAmount; i++) {
+        let game1 = random(matingPool);
+        let game2 = random(matingPool);
+
+        newGen.push(Game.crossover(game1, game2));
     }
 
-    games = matingPool;
+    games = newGen;
 }
 
 function train() {

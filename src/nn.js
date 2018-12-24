@@ -61,5 +61,11 @@ class NeuralNetwork {
         return nn;
     }
 
+    static crossover(nn1, nn2){
+        var nn = new NeuralNetwork(nn1.input_nodes, nn1.hidden_nodes, nn1.output_nodes);
+        nn.weights_ho = Matrix.crossover(nn1.weights_ho, nn2.weights_ho);
+        nn.weights_ih = Matrix.crossover(nn1.weights_ih, nn2.weights_ih);
 
+        return nn;
+    }
 }

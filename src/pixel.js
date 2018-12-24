@@ -50,4 +50,9 @@ class Pixel {
         this.y = floor(this.ySquares / 2);
     }
 
+    static crossover(p1, p2){
+        let brain = NeuralNetwork.crossover(p1.brain, p2.brain);
+        let p = new Pixel(brain);
+        return p;
+    }
 }

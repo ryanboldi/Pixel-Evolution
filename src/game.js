@@ -83,4 +83,9 @@ class Game {
         this.p = new Pixel(this.p);
         this.f = new Food();
     }
+
+    static crossover(g1 , g2){
+        var p = Pixel.crossover(g1.p, g2.p);
+        return (new Game(p))
+    }
 }

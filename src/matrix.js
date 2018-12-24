@@ -123,7 +123,22 @@ class Matrix {
         return mat;
     }
 
-    print() {
-        console.table(this.data);
+    static print(mat) {
+        console.table(mat.data);
+    }
+
+    static crossover(m1, m2) {
+        let mat = new Matrix(m1.rows, m1.cols);
+        for (let i = 0; i < mat.rows; i++) {
+            for (let j = 0; j < mat.cols; j++) {
+                if (random(1) < 0.5) {
+                    mat.data[i][j] = m1.data[i][j];
+                }
+                else {
+                    mat.data[i][j] = m2.data[i][j];
+                }
+            }
+        }
+        return mat;
     }
 }
