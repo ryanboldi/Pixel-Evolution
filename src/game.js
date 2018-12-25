@@ -47,7 +47,8 @@ class Game {
     //     this.p.Move(u, d, r, l);
     // }
     Move() {
-        this.p.decide(this.toArray());
+        // this.p.decide(this.toArray());
+        this.p.decide(this.p.x - this.f.x, this.p.y - this.f.y)
     }
 
     getFitness() {

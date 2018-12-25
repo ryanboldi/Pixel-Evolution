@@ -1,6 +1,6 @@
-const SCALE = 100; //height and width need to be divisible by this
+const SCALE = 25; //height and width need to be divisible by this
 const mutationRate = 0.05;
-const PopLength = 60; //seconds
+const PopLength = 120; //seconds
 const survivability = 100
 const gameAmount = 10;
 const trainSpeed = 100;

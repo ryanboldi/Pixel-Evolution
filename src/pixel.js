@@ -3,7 +3,7 @@ class Pixel {
         if (brain instanceof NeuralNetwork) {
              this.brain = brain;
         } else {
-            this.brain = new NeuralNetwork((width/SCALE) * (height/SCALE),50,4);
+            this.brain = new NeuralNetwork(4,10,4);
         }
 
         this.xSquares = width / SCALE;
@@ -19,7 +19,13 @@ class Pixel {
         if (l > 0.5) this.x -= 1;
     }
 
-    decide(inputs) {
+    decide(xDif, yDif) {
+        let inputs = [];
+        inputs[0] = map(xDif, -width, width, -1, 1);
+        inputs[1] = map(yDif, -height, height, -1, 1);
+        inputs[2] = this.x;
+        inputs[3] = this.y;
+
         let outputs = this.brain.feedforward(inputs)
         this.Move(outputs[0], outputs[1], outputs[2], outputs[3]);
     }
