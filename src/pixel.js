@@ -38,7 +38,7 @@ class Pixel {
     }
 
     Draw(score) {
-        fill(50 * score, 10 * score, 5 * score);
+        fill(50 * score, 10 * score, 5 * score, 50);
         rect(SCALE * this.x, SCALE * this.y, SCALE, SCALE)
     }
 
