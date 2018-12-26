@@ -28,7 +28,7 @@ class Game {
             this.f = new Food();
         }
 
-        this.score = map(dist, 0, this.w * this.h, 100, 0) + ((this.foods) * 1000);
+        this.score = map(dist, 0, this.w * this.h, 100, 0) + ((this.foods) * 100);
     }
 
     Draw() {

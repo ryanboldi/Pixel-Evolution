@@ -2,7 +2,7 @@ const SCALE = 25; //height and width need to be divisible by this
 const mutationRate = 0.05;
 const PopLength = 120; //seconds
 const survivability = 100
-const gameAmount = 10;
+const gameAmount = 100;
 const trainSpeed = 100;
 
 var bestGame;
@@ -32,19 +32,28 @@ function setup() {
 }
 
 function draw() {
-    
+
     stroke(0, 0, 0, 15);
 
-    background(100);
     var xlines = (width / SCALE);
     var ylines = (height / SCALE);
-    for (let i = 1; i < xlines; i++)    line(i * SCALE, 0, i * SCALE, height);
-    for (let j = 1; j < ylines; j++)    line(0, j * SCALE, width, j * SCALE);
 
-    for (let i = 0; i < games.length; i++){
-        games[i].Update();
-        games[i].Move();
-        games[i].Draw();
+
+    if (frameCount % 2 == 0) {
+        for (let i = 0; i < games.length; i++) {
+            background(100);
+
+            for (let i = 1; i < xlines; i++)    line(i * SCALE, 0, i * SCALE, height);
+            for (let j = 1; j < ylines; j++)    line(0, j * SCALE, width, j * SCALE);
+
+            games[i].Update();
+            games[i].Move();
+            games[i].Draw();
+
+
+            
+
+        }
     }
 }
 
@@ -55,13 +64,13 @@ function doOneGen() {
 
     //normalise all the scores
     let maxScore = 0;
-    var newGen  = [];
+    var newGen = [];
 
     for (let i = 0; i < games.length; i++) {
         if (games[i].score > maxScore) maxScore = games[i].score;
         if (games[i].score > bestGame.score) bestGame = games[i];
     }
-    console.log(bestGame.score);
+    console.log(maxScore);
     let matingPool = [];
     for (let i = 0; i < games.length; i++) {
         if (random(1) < (games[i].score / maxScore)) {
