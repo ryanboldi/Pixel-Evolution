@@ -49,10 +49,6 @@ function draw() {
             games[i].Update();
             games[i].Move();
             games[i].Draw();
-
-
-            
-
         }
     }
 }
