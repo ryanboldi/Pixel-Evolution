@@ -2,4 +2,4 @@
  An evolution simulator using real time neuroevolution!
 
 # PLAN:
-![plan of action](\plan.png)
+![plan of action](plan.png)
