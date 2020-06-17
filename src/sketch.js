@@ -1,100 +1,70 @@
-const SCALE = 25; //height and width need to be divisible by this
+const WIDTH = 800,
+    HEIGHT = 800;
+
+const SCALE = 8; //height and width need to be divisible by this
+
+let w = WIDTH / SCALE; //width of the board
+let h = HEIGHT / SCALE; //height of the board
+
 const mutationRate = 0.05;
-const PopLength = 120; //seconds
-const survivability = 100
-const gameAmount = 100;
-const trainSpeed = 100;
 
-var bestGame;
+const startFood = 50;
+const startPlayers = 50;
+const startEnergy = 50;
 
-var games = [];
+let board = [...Array(w)].map(e => Array(h).fill(0));
+
+let food = [];
+let players = [];
 
 function setup() {
-    canvas = createCanvas(500, 500);
+    createCanvas(WIDTH, HEIGHT);
 
-    for (let i = 0; i < gameAmount; i++) games.push(new Game(width / SCALE, height / SCALE));
+    for (let i = 0; i < startFood; i++) {
+        food.push(new Food());
+    }
 
-    genBut = createButton('Do one generation');
-    genBut.position(width + 50, 50);
-    genBut.mousePressed(doOneGen);
-
-    trainBut = createButton('train');
-    trainBut.position(width + 50, 75);
-    trainBut.mousePressed(train);
-
-    bestGame = new Game();
-
-    resetBut = createButton('Reset');
-    resetBut.position(width + 50, 100);
-    resetBut.mousePressed(bestGame.Reset);
-
-
+    for (let i = 0; i < startPlayers; i++) {
+        players.push(new Pixel(floor(random(w)), floor(random(h))));
+    }
 }
 
 function draw() {
+    background(240);
+    stroke(0);
+    strokeWeight(SCALE / 100);
 
-    stroke(0, 0, 0, 15);
-
-    var xlines = (width / SCALE);
-    var ylines = (height / SCALE);
-
-
-    if (frameCount % 2 == 0) {
-        for (let i = 0; i < games.length; i++) {
-            background(100);
-
-            for (let i = 1; i < xlines; i++)    line(i * SCALE, 0, i * SCALE, height);
-            for (let j = 1; j < ylines; j++)    line(0, j * SCALE, width, j * SCALE);
-
-            games[i].Update();
-            games[i].Move();
-            games[i].Draw();
+    //draw out the board based on the board values
+    for (let i = 0; i < w; i++) {
+        for (let j = 0; j < h; j++) {
+            if (board[i][j] == 0) {
+                //draw nothing
+                fill(240);
+            }
+            if (board[i][j] == 1) {
+                //draw food
+                fill(0, 255, 0);
+            }
+            if (board[i][j] == 2) {
+                //draw player
+                fill(0, 0, 255);
+            }
+            //draw rect
+            stroke(0);
+            strokeWeight(SCALE / 100);
+            rect(i * SCALE, j * SCALE, SCALE, SCALE);
         }
     }
+    timeStep();
 }
 
-function doOneGen() {
-    for (let i = 0; i < (PopLength * 60); i++) {
-        for (let j = 0; j < games.length; j++)  games[j].timeStep();
+function timeStep(){
+    board = [...Array(w)].map(e => Array(h).fill(0));
+
+    for (let i = 0; i < food.length; i++) {
+        food[i].draw();
     }
-
-    //normalise all the scores
-    let maxScore = 0;
-    var newGen = [];
-
-    for (let i = 0; i < games.length; i++) {
-        if (games[i].score > maxScore) maxScore = games[i].score;
-        if (games[i].score > bestGame.score) bestGame = games[i];
-    }
-    console.log(maxScore);
-    let matingPool = [];
-    for (let i = 0; i < games.length; i++) {
-        if (random(1) < (games[i].score / maxScore)) {
-            matingPool.push(games[i]);
-        }
-    }
-
-    console.log(matingPool.length);
-
-    for (let i = 0; i < gameAmount; i++) {
-        let game1 = random(matingPool);
-        let game2 = random(matingPool);
-
-        newGen.push(Game.crossover(game1, game2));
-    }
-
-    games = newGen;
-}
-
-function train() {
-    for (let i = 0; i < trainSpeed; i++) {
-        doOneGen();
+    for (let i = 0; i < players.length; i++) {
+        players[i].draw();
     }
 }
-
-// function keyPressed(){
-//     if (keyCode == UP_ARROW) g.Move(1,0,0,0);
-//     if (keyCode == DOWN_ARROW) g.Move(0,1,0,0);
-//     if (keyCode == LEFT_ARROW) g.Move(0,0,0,1);
-//     if (keyCode == RIGHT_ARROW) g.Move(0,0,1,0);
-// }
