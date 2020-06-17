@@ -58,7 +58,7 @@ function draw() {
     timeStep();
 }
 
-function timeStep(){
+function timeStep() {
     board = [...Array(w)].map(e => Array(h).fill(0));
 
     for (let i = 0; i < food.length; i++) {
@@ -67,4 +67,17 @@ function timeStep(){
     for (let i = 0; i < players.length; i++) {
         players[i].draw();
     }
+}
+
+//gets board item at this location, handles wrapping (i.e. -1 => width)..
+function getBoard(x, y) {
+    //if bigger:
+    //keep subtracting w from the x number till its in the range [0,w]
+    //keep subrtacting h from the y number till its in range [0,h]
+
+    //if smaller:
+    //keep adding w, h respectivley till in range [0, w] and [0,h]
+
+    //if in range:
+    //return
 }
