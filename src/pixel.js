@@ -4,34 +4,57 @@ class Pixel {
         this.y = y;
 
         this.energy = startEnergy;
-        this.sight = new Array(12);
+        this.sight = new Array(((playerSight * 2) + 1) * ((playerSight * 2) + 1));
 
-        this.brain = new Architect.Random(12, 12, 1, 2 * 12);
+        this.brain = new Architect.Random(12, 12, 4, 2 * 12);
         //console.log(this.brain);
     }
 
     update() {
-        this.sight[0] = board[this.x][this.y + 2]//etc etc (HANDLE WRAPPING)
+        this.sight = new Array(((playerSight * 2) + 1) * ((playerSight * 2) + 1));
+
+        //starting in top left corner
+        let x = this.x - playerSight;
+        let y = this.y - playerSight;
+        for (let i = 0; i < this.sight.length; i++) {
+            this.sight[i] = (getFood(x, y));
+            x = x + 1;
+            if (x > this.x + playerSight) {
+                x = this.x - playerSight;
+                y += 1;
+            }
+        }
     }
 
     draw() {
         board[this.x][this.y] = 2;
     }
 
-    move() {
+    //[u,d,l,r]
+    move(moves) {
         //HANDLE WRAPPING around the world 
 
+        let big = - Infinity
+        let dir = 0
+        for (let i = 0; i < moves.length; i++) {
+            if (moves[i] > big) {
+                big = moves[i]
+                dir = i
+            }
+        }
 
-        //MOVE TO THE LEFT
-
-
-        //MOVE TO THE RIGHT
-
-
-        //MOVE UP
-
-
-        //MOVE DOWN
+        if (dir == 0){
+            //move up
+        }
+        else if (dir == 1){
+            //move down
+        }
+        else if (dir == 2){
+            //move left
+        }
+        else if (dir == 3){
+            //move right
+        }
     }
 
     createOffspring() {
