@@ -17,8 +17,8 @@ let h = HEIGHT / SCALE; //height of the board
 const mutationRate = 0.05;
 
 const startFood = 10;
-const startPlayers = 1;
-const startEnergy = 50;
+const startPlayers = 50;
+//const startEnergy = 50;
 
 let board = [...Array(w)].map(e => Array(h).fill(0));
 
@@ -33,7 +33,7 @@ function setup() {
     }
 
     for (let i = 0; i < startPlayers; i++) {
-        players.push(new Pixel(floor(random(w)), floor(random(h))));
+        players.push(new Pixel());
     }
 }
 
@@ -149,5 +149,10 @@ function getPos(x, y) {
             }
         }
     }
+}
 
+//replaces random pixel on the board with p
+function replaceRandom(p) {
+    let toRep = floor(random(0, startPlayers));
+    players[toRep] = p;
 }

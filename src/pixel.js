@@ -1,9 +1,8 @@
 class Pixel {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor() {
+        this.x = floor(random(w));
+        this.y = floor(random(h));
 
-        this.energy = startEnergy;
         this.sight = new Array(((playerSight * 2) + 1) * ((playerSight * 2) + 1));
 
         this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
@@ -12,7 +11,6 @@ class Pixel {
 
     update() {
         this.sight = new Array(((playerSight * 2) + 1) * ((playerSight * 2) + 1));
-
         //starting in top left corner
         let x = this.x - playerSight;
         let y = this.y - playerSight;
@@ -24,6 +22,11 @@ class Pixel {
                 y += 1;
             }
         }
+
+        if(getFood(this.x, this.y) == 1){
+            replaceRandom(this.createOffspring());
+        }
+
 
         let outputs = this.brain.activate(this.sight);
         this.move(outputs);
@@ -85,5 +88,12 @@ class Pixel {
 
         newBrain.mutate(choice);
         return newBrain;
+    }
+
+    die(){
+        //if dead, make a new random to take your place
+        this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
+        this.x = floor(random(w));
+        this.y = floor(random(h));
     }
 }
