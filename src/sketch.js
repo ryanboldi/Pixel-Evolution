@@ -117,3 +117,36 @@ function getFood(x, y) {
     //if in range:
     //return
 }
+
+//returns real world pos
+function getPos(x, y) {
+    good = false;
+    //we know board is w x h
+    //if bigger:
+
+    while (good == false) {
+        if (x >= w) {
+            x = x - w;
+            good = false;
+        }
+        if (x < 0) {
+            x = x + w;
+            good = false;
+        }
+        if (y >= h) {
+            y = y - h;
+            good = false;
+        }
+        if (y < 0) {
+            y = y + h;
+            good = false;
+        }
+        if ((y < h) && (y >= 0)) {
+            if ((x < w) && (x >= 0)) {
+                good = true;
+                return { x: x, y: y }
+            }
+        }
+    }
+
+}
