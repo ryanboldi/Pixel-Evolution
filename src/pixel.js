@@ -36,11 +36,7 @@ class Pixel {
 
     createOffspring() {
         //fixes proto not being cloned
-        let pixel = _.cloneDeep(this);
-
-        let newBrain = pixel.brain;
-        console.log(pixel.brain);
-        console.log(this.brain);
+        let newBrain = _.cloneDeep(this.brain);
 
         let choice = random([
             Methods.Mutation.ADD_NODE,
@@ -57,12 +53,7 @@ class Pixel {
             Methods.Mutation.ADD_BACK_CONN,
             Methods.Mutation.SUB_BACK_CONN]);
 
-        console.log(choice)
         newBrain.mutate(choice);
-
-        console.log(newBrain);
-        console.log(this.brain);
-
         return newBrain;
     }
 }
