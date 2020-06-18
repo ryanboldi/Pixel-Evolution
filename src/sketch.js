@@ -9,16 +9,16 @@ Config.warnings = false;
 const WIDTH = 800,
     HEIGHT = 800;
 
-let playerSight = 5; //blocks on each side
+let playerSight = 2; //blocks on each side
 
-const SCALE = 8; //height and width need to be divisible by this
+const SCALE = 16; //height and width need to be divisible by this
 
 let w = WIDTH / SCALE; //width of the board
 let h = HEIGHT / SCALE; //height of the board
 
 const mutationRate = 0.05;
 
-const startFood = 100;
+const startFood = 10;
 const startPlayers = 100;
 //const startEnergy = 50;
 
@@ -38,7 +38,8 @@ function setup() {
         players.push(new Pixel());
     }
 
-    for (let i = 0; i < 10000; i++){
+    for (let i = 0; i < 100; i++){
+        if (i%10 == 0) console.log(i);
         timeStep();
     }
 }
