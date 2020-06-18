@@ -6,7 +6,7 @@ class Pixel {
         this.energy = startEnergy;
         this.sight = new Array(((playerSight * 2) + 1) * ((playerSight * 2) + 1));
 
-        this.brain = new Architect.Random(12, 12, 4, 2 * 12);
+        this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
         //console.log(this.brain);
     }
 
@@ -24,6 +24,9 @@ class Pixel {
                 y += 1;
             }
         }
+
+        let outputs = this.brain.activate(this.sight);
+        this.move(outputs);
     }
 
     draw() {
@@ -43,17 +46,21 @@ class Pixel {
             }
         }
 
-        if (dir == 0){
+        if (dir == 0) {
             //move up
+            this.y = getPos(this.x, this.y - 1).y;
         }
-        else if (dir == 1){
+        else if (dir == 1) {
             //move down
+            this.y = getPos(this.x, this.y + 1).y;
         }
-        else if (dir == 2){
+        else if (dir == 2) {
             //move left
+            this.x = getPos(this.x - 1, this.y).x;
         }
-        else if (dir == 3){
+        else if (dir == 3) {
             //move right
+            this.x = getPos(this.x + 1, this.y).x;
         }
     }
 

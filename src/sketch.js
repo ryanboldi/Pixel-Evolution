@@ -9,14 +9,14 @@ const WIDTH = 800,
 
 let playerSight = 2; //blocks on each side
 
-const SCALE = 80; //height and width need to be divisible by this
+const SCALE = 8; //height and width need to be divisible by this
 
 let w = WIDTH / SCALE; //width of the board
 let h = HEIGHT / SCALE; //height of the board
 
 const mutationRate = 0.05;
 
-const startFood = 1;
+const startFood = 10;
 const startPlayers = 1;
 const startEnergy = 50;
 
@@ -74,6 +74,7 @@ function timeStep() {
     }
     for (let i = 0; i < players.length; i++) {
         players[i].draw();
+        players[i].update();
     }
 }
 
