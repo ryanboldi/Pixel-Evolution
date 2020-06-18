@@ -16,7 +16,7 @@ let h = HEIGHT / SCALE; //height of the board
 
 const mutationRate = 0.05;
 
-const startFood = 10;
+const startFood = 100;
 const startPlayers = 50;
 //const startEnergy = 50;
 
@@ -49,7 +49,6 @@ function draw() {
                 //draw nothing
                 fill(240);
             }
-            if (board[i][j] == 1) {
                 //draw food
                 fill(0, 255, 0);
             }
@@ -104,7 +103,6 @@ function getFood(x, y) {
         if ((y < h) && (y >= 0)) {
             if ((x < w) && (x >= 0)) {
                 good = true;
-                if (board[x][y] == 1) return 1;
                 else return 0;
             }
         }
@@ -151,8 +149,11 @@ function getPos(x, y) {
     }
 }
 
-//replaces random pixel on the board with p
-function replaceRandom(p) {
+//replaces random pixel on the board with p, parent is n and can't be replaced
+function replaceRandom(n, p) {
     let toRep = floor(random(0, startPlayers));
+    while (toRep == n) {
+        toRep = floor(random(0, startPlayers));
+    }
     players[toRep] = p;
 }
