@@ -4,20 +4,22 @@ let Methods = neataptic.Methods;
 let Config = neataptic.Config;
 let Architect = neataptic.Architect;
 
+Config.warnings = false;
+
 const WIDTH = 800,
     HEIGHT = 800;
 
-let playerSight = 2; //blocks on each side
+let playerSight = 5; //blocks on each side
 
-const SCALE = 80; //height and width need to be divisible by this
+const SCALE = 8; //height and width need to be divisible by this
 
 let w = WIDTH / SCALE; //width of the board
 let h = HEIGHT / SCALE; //height of the board
 
 const mutationRate = 0.05;
 
-const startFood = 10;
-const startPlayers = 1;
+const startFood = 100;
+const startPlayers = 100;
 //const startEnergy = 50;
 
 let board = [...Array(w)].map(e => Array(h).fill(0));
@@ -34,6 +36,10 @@ function setup() {
 
     for (let i = 0; i < startPlayers; i++) {
         players.push(new Pixel());
+    }
+
+    for (let i = 0; i < 10000; i++){
+        timeStep();
     }
 }
 

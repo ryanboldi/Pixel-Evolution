@@ -9,7 +9,7 @@ class Pixel {
             this.brain = brain;
         }
         else {
-            this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
+            this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), 10, 4);
             //console.log(this.brain);
         }
     }
