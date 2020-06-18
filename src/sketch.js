@@ -9,15 +9,15 @@ const WIDTH = 800,
 
 let playerSight = 2; //blocks on each side
 
-const SCALE = 8; //height and width need to be divisible by this
+const SCALE = 80; //height and width need to be divisible by this
 
 let w = WIDTH / SCALE; //width of the board
 let h = HEIGHT / SCALE; //height of the board
 
 const mutationRate = 0.05;
 
-const startFood = 100;
-const startPlayers = 50;
+const startFood = 10;
+const startPlayers = 1;
 //const startEnergy = 50;
 
 let board = [...Array(w)].map(e => Array(h).fill(0));
@@ -48,7 +48,7 @@ function draw() {
             if (board[i][j] == 0) {
                 //draw nothing
                 fill(240);
-            }
+            } if (board[i][j] == 1) {
                 //draw food
                 fill(0, 255, 0);
             }
@@ -67,7 +67,6 @@ function draw() {
 
 function timeStep() {
     board = [...Array(w)].map(e => Array(h).fill(0));
-
     for (let i = 0; i < food.length; i++) {
         food[i].draw();
     }
@@ -103,6 +102,7 @@ function getFood(x, y) {
         if ((y < h) && (y >= 0)) {
             if ((x < w) && (x >= 0)) {
                 good = true;
+                if (board[x][y] == 1) return 1;
                 else return 0;
             }
         }
@@ -150,10 +150,11 @@ function getPos(x, y) {
 }
 
 //replaces random pixel on the board with p, parent is n and can't be replaced
-function replaceRandom(n, p) {
+function replaceRandom(p) {
     let toRep = floor(random(0, startPlayers));
-    while (toRep == n) {
-        toRep = floor(random(0, startPlayers));
-    }
     players[toRep] = p;
+}
+
+function newFood(){
+    food.push(new Food());    
 }

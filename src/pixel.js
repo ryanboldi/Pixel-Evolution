@@ -1,12 +1,17 @@
 class Pixel {
-    constructor() {
+    constructor(brain) {
         this.x = floor(random(w));
         this.y = floor(random(h));
 
         this.sight = new Array(((playerSight * 2) + 1) * ((playerSight * 2) + 1));
 
-        this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
-        //console.log(this.brain);
+        if (brain) {
+            this.brain = brain;
+        }
+        else {
+            this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
+            //console.log(this.brain);
+        }
     }
 
     update() {
@@ -23,7 +28,16 @@ class Pixel {
             }
         }
 
-        if(getFood(this.x, this.y) == 1){
+        let toDel = -1;
+        //find which food we ate, and delete it
+        for (let i = 0; i < food.length; i++) {
+            if (food[i].x == this.x && food[i].y == this.y) {
+                //delete food[i] and make new random food
+                toDel = i;
+            }
+        }
+        if (toDel >= 0) {
+            food[toDel] = new Food();
             replaceRandom(this.createOffspring());
         }
 
@@ -87,10 +101,10 @@ class Pixel {
             Methods.Mutation.SUB_BACK_CONN]);
 
         newBrain.mutate(choice);
-        return newBrain;
+        return new Pixel(newBrain);
     }
 
-    die(){
+    die() {
         //if dead, make a new random to take your place
         this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
         this.x = floor(random(w));
