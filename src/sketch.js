@@ -1,3 +1,9 @@
+/** Rename vars */
+let Neat    = neataptic.Neat;
+let Methods = neataptic.Methods;
+let Config  = neataptic.Config;
+let Architect = neataptic.Architect;
+
 const WIDTH = 800,
     HEIGHT = 800;
 
