@@ -36,7 +36,7 @@ class Pixel {
 
     createOffspring() {
         //fixes proto not being cloned
-        let pixel = { ...this };
+        let pixel = _.cloneDeep(this);
 
         let newBrain = pixel.brain;
         console.log(pixel.brain);
