@@ -7,5 +7,5 @@
 # Here is what a randomly initialized population looks like:
 ![random creatures](/random1.gif)
 
-# This is what they look like after a about 6000 time steps:
+# This is what they look like after about 6000 time steps of evolution:
 ![evolved creatures](/evolved1.gif)
