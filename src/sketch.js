@@ -11,17 +11,20 @@ const WIDTH = 800,
 
 let playerSight = 2; //blocks on each side
 
-const SCALE = 16; //height and width need to be divisible by this
+const SCALE = 32; //height and width need to be divisible by this
 
 let w = WIDTH / SCALE; //width of the board
 let h = HEIGHT / SCALE; //height of the board
+
+let timestep = 0;
+let avgData = []; //array to store averages every 100 timesteps
 
 const mutationRate = 0.05;
 
 const foodEnergy = 30;
 
 const startFood = 10;
-const startPlayers = 100;
+const startPlayers = 10;
 //const startEnergy = 50;
 
 let board = [...Array(w)].map(e => Array(h).fill(0));
@@ -29,7 +32,9 @@ let board = [...Array(w)].map(e => Array(h).fill(0));
 let food = [];
 let players = [];
 
+let ctx; 
 function setup() {
+    ctx = document.getElementById('myChart').getContext('2d');
     createCanvas(WIDTH, HEIGHT);
 
     for (let i = 0; i < startFood; i++) {
@@ -75,6 +80,7 @@ function draw() {
 }
 
 function timeStep() {
+    timestep ++;
     board = [...Array(w)].map(e => Array(h).fill(0));
     for (let i = 0; i < food.length; i++) {
         food[i].draw();
@@ -82,6 +88,23 @@ function timeStep() {
     for (let i = 0; i < players.length; i++) {
         players[i].draw();
         players[i].update();
+    }
+
+
+    if (timestep % 100 == 0){
+        //get average score of alive population, and plot
+        let tot = 0
+        for (let i = 0; i < players.length; i++){
+            tot += players[i].score;
+        }
+        let avg = tot/players.length;
+        avgData.push({x: timeStep, y:avg});
+
+        let myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: avgData
+        });
+        console.log(avg);
     }
 }
 
