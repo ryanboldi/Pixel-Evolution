@@ -3,6 +3,8 @@ class Pixel {
         this.x = floor(random(w));
         this.y = floor(random(h));
 
+        this.energy = 50;
+
         this.sight = new Array(((playerSight * 2) + 1) * ((playerSight * 2) + 1));
 
         if (brain) {
@@ -37,8 +39,18 @@ class Pixel {
             }
         }
         if (toDel >= 0) {
+            this.energy += foodEnergy;
             food[toDel] = new Food();
+            
+        }
+
+        if (this.energy >= 100){
             replaceRandom(this.createOffspring());
+            this.energy -= 50;
+        }
+
+        if (this.energy <= 0){
+            this.die();
         }
 
 
@@ -79,6 +91,8 @@ class Pixel {
             //move right
             this.x = getPos(this.x + 1, this.y).x;
         }
+
+        this.energy -= 1;
     }
 
     createOffspring() {
@@ -109,5 +123,6 @@ class Pixel {
         this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
         this.x = floor(random(w));
         this.y = floor(random(h));
+        this.energy = 50;
     }
 }
