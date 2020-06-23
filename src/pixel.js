@@ -98,6 +98,7 @@ class Pixel {
     }
 
     createOffspring() {
+        console.log("OFFSPRING");
         //fixes proto not being cloned
         let newBrain = _.cloneDeep(this.brain);
 
@@ -121,7 +122,6 @@ class Pixel {
     }
 
     die() {
-        console.log("died");
         //if dead, make a new random to take your place
         this.brain = new Architect.Random(((playerSight * 2) + 1) * ((playerSight * 2) + 1), ((playerSight * 2) + 1) * ((playerSight * 2) + 1), 4);
         this.x = floor(random(w));

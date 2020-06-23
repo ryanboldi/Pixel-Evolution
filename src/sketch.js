@@ -32,7 +32,7 @@ let board = [...Array(w)].map(e => Array(h).fill(0));
 let food = [];
 let players = [];
 
-let ctx; 
+let ctx;
 function setup() {
     ctx = document.getElementById('myChart').getContext('2d');
     createCanvas(WIDTH, HEIGHT);
@@ -45,8 +45,8 @@ function setup() {
         players.push(new Pixel());
     }
 
-    for (let i = 0; i < 0; i++){
-        if (i%10 == 0) console.log(i);
+    for (let i = 0; i < 0; i++) {
+        if (i % 10 == 0) console.log(i);
         timeStep();
     }
 }
@@ -80,7 +80,7 @@ function draw() {
 }
 
 function timeStep() {
-    timestep ++;
+    timestep++;
     board = [...Array(w)].map(e => Array(h).fill(0));
     for (let i = 0; i < food.length; i++) {
         food[i].draw();
@@ -91,20 +91,35 @@ function timeStep() {
     }
 
 
-    if (timestep % 100 == 0){
+    if (timestep % 100 == 0) {
         //get average score of alive population, and plot
         let tot = 0
-        for (let i = 0; i < players.length; i++){
+        for (let i = 0; i < players.length; i++) {
             tot += players[i].score;
         }
-        let avg = tot/players.length;
-        avgData.push({x: timeStep, y:avg});
+        let avg = tot / players.length;
+        avgData.push({ x: timestep, y: avg });
 
         let myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: avgData
+            type: 'scatter',
+            data: avgData,
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        labelString: "Fitness"
+                    }],
+                    xAxes: [{
+                        type: 'linear',
+                        position: 'bottom',
+                        display: true,
+                        labelString: "Time"
+                    }],
+                },
+                showLine: true
+            }
         });
-        console.log(avg);
+        console.log(avgData);
     }
 }
 
@@ -187,6 +202,6 @@ function replaceRandom(p) {
     players[toRep] = p;
 }
 
-function newFood(){
-    food.push(new Food());    
+function newFood() {
+    food.push(new Food());
 }
