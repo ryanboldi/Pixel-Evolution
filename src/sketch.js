@@ -11,7 +11,7 @@ const WIDTH = 800,
 
 let playerSight = 2; //blocks on each side
 
-const SCALE = 32; //height and width need to be divisible by this
+const SCALE = 8; //height and width need to be divisible by this
 
 let w = WIDTH / SCALE; //width of the board
 let h = HEIGHT / SCALE; //height of the board
@@ -23,8 +23,8 @@ const mutationRate = 0.05;
 
 const foodEnergy = 30;
 
-const startFood = 10;
-const startPlayers = 10;
+const startFood = 100;
+const startPlayers = 100;
 //const startEnergy = 50;
 
 let board = [...Array(w)].map(e => Array(h).fill(0));
@@ -32,9 +32,7 @@ let board = [...Array(w)].map(e => Array(h).fill(0));
 let food = [];
 let players = [];
 
-let ctx;
 function setup() {
-    ctx = document.getElementById('myChart').getContext('2d');
     createCanvas(WIDTH, HEIGHT);
 
     for (let i = 0; i < startFood; i++) {
@@ -98,28 +96,7 @@ function timeStep() {
             tot += players[i].score;
         }
         let avg = tot / players.length;
-        avgData.push({ x: timestep, y: avg });
-
-        let myLineChart = new Chart(ctx, {
-            type: 'scatter',
-            data: avgData,
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        labelString: "Fitness"
-                    }],
-                    xAxes: [{
-                        type: 'linear',
-                        position: 'bottom',
-                        display: true,
-                        labelString: "Time"
-                    }],
-                },
-                showLine: true
-            }
-        });
-        console.log(avgData);
+        console.log(avg);
     }
 }
 
